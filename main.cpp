@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include <remez.hpp>
+#include "remez.hpp"
 
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
     int StopBandRefPointNum = (M + 2) - PassBandRefPointNum;
     InitRefPoint(x, Fp, Fs, PassBandRefPointNum, StopBandRefPointNum);
 
-    
+
     // ========== Initialize ==========
 
     return 0;
