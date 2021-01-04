@@ -8,8 +8,8 @@ int main(void)
     // ========== Filter Parameter ==========
     const int N = 50;  // FIR filter's order (should be a even number)
     const int M = N/2;
-    const int Fp = 0.20;  // Passband edge normalized frequency
-    const int Fs = 0.30;  // Stopband edge normalized frequency
+    const double Fp = 0.20;  // Passband edge normalized frequency
+    const double Fs = 0.30;  // Stopband edge normalized frequency
     const int S = N*20;  // Frequency split count
     // ========== Filter Parameter ==========
 
