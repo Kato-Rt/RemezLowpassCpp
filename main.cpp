@@ -1,3 +1,8 @@
+/*
+* Program By Kato
+* Calcuating Type-I FIR LPF with Remez algorithm
+*/
+
 #include <iostream>
 #include <vector>
 
