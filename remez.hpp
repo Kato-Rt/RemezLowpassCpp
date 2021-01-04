@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <cmath>
 
 void InitRefPoint(std::vector<double>& x, double Fp, double Fs, int PassBandRefPointNum, int StopBandRefPointNum)
 {
@@ -17,5 +18,36 @@ void InitRefPoint(std::vector<double>& x, double Fp, double Fs, int PassBandRefP
     {
         int index = i + PassBandRefPointNum;
         x[index] = Fs + StepStopBand * i;
+    }
+}
+
+int IdealLpfResponse(double Fp, double Fs, double f)
+{
+    if((f >= 0) && (f <= Fp))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void CalculateAMatrix(std::vector<std::vector<double>>& A, std::vector<double> x)
+{
+    int size = x.size();
+
+    for(int i = 0; i < size; i++)
+    {
+        double f = x[i];
+        for(int j = 0; j < size; j++)
+        {
+            A[i][j] = cos(j * 2 * M_PI * f);
+        }
+    }
+
+    for(int i = 0; i < size; i++)
+    {
+        A[i][size - 1] = i % 2 ? -1 : 1;
     }
 }
