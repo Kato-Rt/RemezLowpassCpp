@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cmath>
+#include "Type1Fir.hpp"
 
 void InitRefPoint(std::vector<double>& x, double Fp, double Fs, int PassBandRefPointNum, int StopBandRefPointNum)
 {
@@ -50,4 +51,34 @@ void CalculateAMatrix(std::vector<std::vector<double>>& A, std::vector<double> x
     {
         A[i][size - 1] = i % 2 ? -1 : 1;
     }
+}
+
+// 振幅特性から次の参照点を求める
+std::vector<double> GetNextRefPoints(std::vector<double> x, int S)
+{
+    // フィルタ係数より振幅特性を計算
+    Type1Fir filter(x);
+    auto res = filter.CalcAmplitudeResponce(S);
+
+    // 参照点位置保存場所
+    std::vector<double> result;
+
+    // ピーク探索
+    for(int i = 1; i < S - 1; i++)
+    {
+        // 点iの前後の振幅で差を見る
+        double front = i - 1;
+        double back = i + 1;
+        double dFront = res[i] - res[front];
+        double dBack = res[i] - res[back];
+
+        // 頂点であれば両方の差分の符号が一致する (積が+)
+        if(dFront*dBack > 0)
+        {
+            double f = i / (2.0 * S);
+            result.push_back(f);
+        }
+    }
+
+    return result;
 }
